@@ -2,6 +2,23 @@
 # Dependency stages
 # ===========================================================================
 
+FROM node:24.19.0-alpine3.23@sha256:244cc2b53f46f9e876304391d17682b0ddae9ac33491f4857e25e35a36ba7995 AS front-deps
+
+WORKDIR /app
+
+COPY ./package.json ./yarn.lock ./.yarnrc.yml ./tsconfig.base.json ./nx.json /app/
+COPY ./.yarn/releases /app/.yarn/releases
+COPY ./.yarn/patches /app/.yarn/patches
+
+COPY ./packages/twenty-ui/package.json /app/packages/twenty-ui/
+COPY ./packages/twenty-shared/package.json /app/packages/twenty-shared/
+COPY ./packages/twenty-front/package.json /app/packages/twenty-front/
+COPY ./packages/twenty-front-component-renderer/package.json /app/packages/twenty-front-component-renderer/
+COPY ./packages/twenty-sdk/package.json /app/packages/twenty-sdk/
+COPY ./packages/twenty-client-sdk/package.json /app/packages/twenty-client-sdk/
+
+RUN yarn workspaces focus twenty twenty-front twenty-front-component-renderer twenty-ui twenty-shared twenty-sdk twenty-client-sdk && yarn cache clean && npx nx reset
+
 
 FROM node:24.19.0-alpine3.23@sha256:244cc2b53f46f9e876304391d17682b0ddae9ac33491f4857e25e35a36ba7995 AS server-deps
 
@@ -41,6 +58,25 @@ RUN find /app/packages/twenty-server/dist -name '*.d.ts' -delete \
 
 RUN yarn workspaces focus --production twenty-emails twenty-shared twenty-client-sdk twenty-server
 
+
+FROM front-deps AS twenty-front-build
+
+COPY ./packages/twenty-front /app/packages/twenty-front
+COPY ./packages/twenty-front-component-renderer /app/packages/twenty-front-component-renderer
+COPY ./packages/twenty-ui /app/packages/twenty-ui
+COPY ./packages/twenty-shared /app/packages/twenty-shared
+COPY ./packages/twenty-sdk /app/packages/twenty-sdk
+COPY ./packages/twenty-client-sdk /app/packages/twenty-client-sdk
+RUN npx nx run twenty-front:lingui:extract && \
+    npx nx run twenty-front:lingui:compile
+# To skip the memory-intensive frontend build, pre-build on the host:
+#   npx nx build twenty-front
+# The check below will use packages/twenty-front/build/ if it already exists.
+RUN if [ -d /app/packages/twenty-front/build ]; then \
+      echo "Using pre-built frontend from host"; \
+    else \
+      NODE_OPTIONS="--max-old-space-size=8192" npx nx build twenty-front; \
+    fi
 
 
 # ===========================================================================
@@ -139,6 +175,29 @@ RUN apk add --no-cache aws-cli
 USER 1000
 
 
+# ===========================================================================
+# Target: twenty (server + frontend)
+#   docker build --target twenty -f packages/twenty-docker/twenty/Dockerfile .
+# ===========================================================================
+
+FROM twenty-server AS twenty
+
+COPY --chown=1000 --from=twenty-front-build /app/packages/twenty-front/build /app/packages/twenty-server/dist/front
+
+LABEL org.opencontainers.image.description="Twenty image with backend and frontend."
+
+
+# ===========================================================================
+# Target: twenty-aws (server + frontend + aws-cli)
+#   docker build --target twenty-aws -f packages/twenty-docker/twenty/Dockerfile .
+# ===========================================================================
+
+FROM twenty AS twenty-aws
+
+USER root
+RUN apk add --no-cache aws-cli
+USER 1000
+
 
 # ===========================================================================
 # Target: twenty-app-dev (all-in-one with Postgres + Redis)
@@ -202,6 +261,8 @@ COPY --from=twenty-server-build /app/packages/twenty-emails/dist /app/packages/t
 COPY --from=twenty-server-build /app/packages/twenty-client-sdk/package.json /app/packages/twenty-client-sdk/
 COPY --from=twenty-server-build /app/packages/twenty-client-sdk/dist /app/packages/twenty-client-sdk/dist
 
+# Frontend static build
+COPY --from=twenty-front-build /app/packages/twenty-front/build /app/packages/twenty-server/dist/front
 
 # Source maps are not needed in the dev image (no Sentry). Node dev headers are
 # dropped for the same scanner-hygiene reasons as in twenty-server above.

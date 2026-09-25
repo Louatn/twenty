@@ -1,0 +1,1 @@
+export const TAB_LIST_HORIZONTAL_PADDING = 8;
