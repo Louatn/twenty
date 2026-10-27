@@ -1235,6 +1235,8 @@ export const STANDARD_OBJECT_FIELDS = {
     bodyV2: { universalIdentifier: '20202020-4aa0-4ae8-898d-7df0afd47ab1' },
     dueAt: { universalIdentifier: '20202020-fd99-40da-951b-4cb9a352fce3' },
     status: { universalIdentifier: '20202020-70bc-48f9-89c5-6aa730b151e0' },
+    // SyncData: task priority (High / Medium / Low)
+    priority: { universalIdentifier: 'cb2dcde1-88b6-48a7-812d-3aa890b4166a' },
     taskTargets: {
       universalIdentifier: '20202020-de9c-4d0e-a452-713d4a3e5fc7',
     },

@@ -41,6 +41,17 @@ export const computeStandardTaskViewGroups = (
         position: 2,
       },
     }),
+    assignedToMeOverdue: createStandardViewGroupFlatMetadata({
+      ...args,
+      objectName: 'task',
+      context: {
+        viewName: 'assignedToMe',
+        viewGroupName: 'overdue',
+        isVisible: true,
+        fieldValue: 'OVERDUE',
+        position: 3,
+      },
+    }),
     assignedToMeEmpty: createStandardViewGroupFlatMetadata({
       ...args,
       objectName: 'task',
@@ -49,7 +60,7 @@ export const computeStandardTaskViewGroups = (
         viewGroupName: 'empty',
         isVisible: true,
         fieldValue: '',
-        position: 3,
+        position: 4,
       },
     }),
     byStatusTodo: createStandardViewGroupFlatMetadata({
@@ -83,6 +94,17 @@ export const computeStandardTaskViewGroups = (
         isVisible: true,
         fieldValue: 'DONE',
         position: 2,
+      },
+    }),
+    byStatusOverdue: createStandardViewGroupFlatMetadata({
+      ...args,
+      objectName: 'task',
+      context: {
+        viewName: 'byStatus',
+        viewGroupName: 'overdue',
+        isVisible: true,
+        fieldValue: 'OVERDUE',
+        position: 3,
       },
     }),
   };

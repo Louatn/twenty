@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 
+import { SyncdataWorkspaceProvisioningService } from 'src/engine/workspace-manager/syncdata/syncdata-workspace-provisioning.service';
 import { ApplicationService } from 'src/engine/core-modules/application/application.service';
 import { FlatApplication } from 'src/engine/core-modules/application/types/flat-application.type';
 import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user-workspace.entity';
@@ -35,6 +36,7 @@ export class WorkspaceManagerService {
     private readonly roleRepository: WorkspaceScopedRepository<RoleEntity>,
     private readonly applicationService: ApplicationService,
     private readonly agentHistoryLifecycleService: AgentHistoryLifecycleService,
+    private readonly syncdataProvisioningService: SyncdataWorkspaceProvisioningService,
   ) {}
 
   public async init({
@@ -92,6 +94,9 @@ export class WorkspaceManagerService {
       userId,
       workspaceCustomFlatApplication,
     });
+
+    // SyncData: what the standard application cannot declare (kanban sort, workflows)
+    await this.syncdataProvisioningService.provision(workspaceId);
   }
 
   private async setupDefaultRoles({

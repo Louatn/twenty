@@ -10,6 +10,8 @@ import { DeleteSystemReadableObjectNavigationCommandMenuItemsCommand } from 'src
 import { MoveCampaignSendingTablesToWorkspaceCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790203235337-move-campaign-sending-tables-to-workspace.command';
 import { EnableCommonRecordSharingCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790251806563-enable-common-record-sharing.command';
 import { BackfillLogicFunctionFileRowsCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790262034322-backfill-logic-function-file-rows.command';
+import { SyncdataSyncTaskModelCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790300000000-syncdata-sync-task-model.command';
+import { SyncdataProvisioningModule } from 'src/engine/workspace-manager/syncdata/syncdata-provisioning.module';
 import { ApplicationModule } from 'src/engine/core-modules/application/application.module';
 import { BillingModule } from 'src/engine/core-modules/billing/billing.module';
 import { FileEntity } from 'src/engine/core-modules/file/entities/file.entity';
@@ -31,6 +33,7 @@ import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace
     BillingModule,
     WorkspaceMigrationModule,
     WorkspaceMigrationRunnerModule,
+    SyncdataProvisioningModule,
   ],
   providers: [
     AttributeChatMessageSendersCommand,
@@ -40,6 +43,7 @@ import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace
     BackfillLogicFunctionFileRowsCommand,
     SyncAttachmentRecordPageCommand,
     RelabelAttachmentTargetFieldsCommand,
+    SyncdataSyncTaskModelCommand,
     provideWorkspaceScopedRepository(FieldMetadataEntity),
     provideWorkspaceScopedRepository(FileEntity),
   ],

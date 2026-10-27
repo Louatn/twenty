@@ -19,6 +19,7 @@ import { UserRoleModule } from 'src/engine/metadata-modules/user-role/user-role.
 import { provideWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/provide-workspace-scoped-repository';
 import { WorkspaceDataSourceModule } from 'src/engine/workspace-datasource/workspace-datasource.module';
 import { DevSeederModule } from 'src/engine/workspace-manager/dev-seeder/dev-seeder.module';
+import { SyncdataProvisioningModule } from 'src/engine/workspace-manager/syncdata/syncdata-provisioning.module';
 import { TwentyStandardApplicationModule } from 'src/engine/workspace-manager/twenty-standard-application/twenty-standard-application.module';
 import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace-migration/workspace-migration.module';
 
@@ -35,6 +36,7 @@ import { WorkspaceManagerService } from './workspace-manager.service';
     PermissionsModule,
     AiAgentModule,
     TwentyStandardApplicationModule,
+    SyncdataProvisioningModule,
     WorkspaceManyOrAllFlatEntityMapsCacheModule,
     TypeOrmModule.forFeature([UserWorkspaceEntity, WorkspaceEntity]),
     RoleModule,

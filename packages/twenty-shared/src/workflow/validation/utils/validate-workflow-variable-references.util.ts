@@ -1,6 +1,7 @@
 import { isNonEmptyArray, isObject } from '@sniptt/guards';
 
 import { isDefined } from '@/utils';
+import { DATE_CONTEXT_KEY } from '@/workflow/constants/DateContextKey';
 import { TRIGGER_STEP_ID } from '@/workflow/constants/TriggerStepId';
 import { parseVariablePath } from '@/workflow/utils/variable-path.util';
 import {
@@ -44,6 +45,10 @@ export const validateWorkflowVariableReferences = ({
           stepId: step.id,
           path: variable,
         });
+        continue;
+      }
+
+      if (referencedStepId === DATE_CONTEXT_KEY) {
         continue;
       }
 

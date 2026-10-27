@@ -260,6 +260,67 @@ export const buildTaskStandardFlatFieldMetadatas = ({
           position: 2,
           color: 'green',
         },
+        {
+          // SyncData: set by the midnight "Mark overdue tasks" workflow
+          id: 'a756f938-7cdd-45d8-8739-90ed614ec734',
+          value: 'OVERDUE',
+          label: i18nLabel(
+            msg({ message: `Overdue`, context: 'fieldMetadata.label' }),
+          ),
+          position: 3,
+          color: 'red',
+        },
+      ],
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
+  // SyncData: High / Medium / Low, High listed first so a select sort puts it on top
+  priority: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'priority',
+      type: FieldMetadataType.SELECT,
+      label: i18nLabel(
+        msg({ message: `Priority`, context: 'fieldMetadata.label' }),
+      ),
+      description: i18nLabel(
+        msg({ message: `Task priority`, context: 'fieldMetadata.description' }),
+      ),
+      icon: 'IconFlag',
+      isNullable: true,
+      defaultValue: "'MEDIUM'",
+      options: [
+        {
+          id: 'f15653d7-3de5-46b8-bde0-c44c6163ebf4',
+          value: 'HIGH',
+          label: i18nLabel(
+            msg({ message: `High`, context: 'fieldMetadata.label' }),
+          ),
+          position: 0,
+          color: 'red',
+        },
+        {
+          id: '34e4d61a-b836-4eb9-b347-32707599d66b',
+          value: 'MEDIUM',
+          label: i18nLabel(
+            msg({ message: `Medium`, context: 'fieldMetadata.label' }),
+          ),
+          position: 1,
+          color: 'orange',
+        },
+        {
+          id: '3cc7e043-9d40-45bd-a982-9dcb7b3fda14',
+          value: 'LOW',
+          label: i18nLabel(
+            msg({ message: `Low`, context: 'fieldMetadata.label' }),
+          ),
+          position: 2,
+          color: 'blue',
+        },
       ],
     },
     standardObjectMetadataRelatedEntityIds,

@@ -1035,6 +1035,7 @@ export const STANDARD_OBJECTS = {
           'assignee',
           'bodyV2',
           'createdAt',
+          'priority',
         ],
       }),
       assignedToMe: {
@@ -1061,6 +1062,9 @@ export const STANDARD_OBJECTS = {
           createdAt: {
             universalIdentifier: '20202020-af07-4a07-8a07-ba5ca551aaf3',
           },
+          priority: {
+            universalIdentifier: '17959546-2151-45d3-8b36-62f13e14d4d2',
+          },
         },
         viewFilters: {
           assigneeIsMe: {
@@ -1076,6 +1080,9 @@ export const STANDARD_OBJECTS = {
           },
           done: {
             universalIdentifier: '20202020-af17-4a07-8a07-ba5ca551abf4',
+          },
+          overdue: {
+            universalIdentifier: '4f9a4ff1-993a-4379-8799-371e9565e723',
           },
           empty: {
             universalIdentifier: '20202020-af17-4a07-8a07-ba5ca551abf5',
@@ -1100,6 +1107,9 @@ export const STANDARD_OBJECTS = {
           createdAt: {
             universalIdentifier: '20202020-af08-4a08-8a08-ba5cba5babf4',
           },
+          priority: {
+            universalIdentifier: '3e3cb089-0977-459b-9051-6a6077e97f12',
+          },
         },
         viewGroups: {
           todo: {
@@ -1111,6 +1121,9 @@ export const STANDARD_OBJECTS = {
           done: {
             universalIdentifier: '20202020-af18-4a08-8a08-ba5cba5bbf03',
           },
+          overdue: {
+            universalIdentifier: 'a1c8e5e9-f107-481a-8598-449d91dccec9',
+          },
         },
       },
       taskRecordPageFields: buildStandardObjectRecordPageFieldsView({
@@ -1119,6 +1132,7 @@ export const STANDARD_OBJECTS = {
         viewFieldNames: [
           'dueAt',
           'status',
+          'priority',
           'assignee',
           'taskTargets',
           'attachments',

@@ -105,6 +105,19 @@ export const computeStandardTaskViewFields = (
       },
     }),
 
+    allTasksPriority: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'task',
+      context: {
+        viewName: 'allTasks',
+        viewFieldName: 'priority',
+        fieldName: 'priority',
+        position: 9,
+        isVisible: true,
+        size: 150,
+      },
+    }),
+
     byStatusTitle: createStandardViewFieldFlatMetadata({
       ...args,
       objectName: 'task',
@@ -251,6 +264,31 @@ export const computeStandardTaskViewFields = (
       },
     }),
 
+    byStatusPriority: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'task',
+      context: {
+        viewName: 'byStatus',
+        viewFieldName: 'priority',
+        fieldName: 'priority',
+        position: 5,
+        isVisible: true,
+        size: 150,
+      },
+    }),
+    assignedToMePriority: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'task',
+      context: {
+        viewName: 'assignedToMe',
+        viewFieldName: 'priority',
+        fieldName: 'priority',
+        position: 9,
+        isVisible: true,
+        size: 150,
+      },
+    }),
+
     // taskRecordPageFields view fields
     // General group
     taskRecordPageFieldsDueAt: createStandardViewFieldFlatMetadata({
@@ -287,6 +325,19 @@ export const computeStandardTaskViewFields = (
         viewFieldName: 'assignee',
         fieldName: 'assignee',
         position: 2,
+        isVisible: true,
+        size: 150,
+        viewFieldGroupName: 'general',
+      },
+    }),
+    taskRecordPageFieldsPriority: createStandardViewFieldFlatMetadata({
+      ...args,
+      objectName: 'task',
+      context: {
+        viewName: 'taskRecordPageFields',
+        viewFieldName: 'priority',
+        fieldName: 'priority',
+        position: 3,
         isVisible: true,
         size: 150,
         viewFieldGroupName: 'general',
