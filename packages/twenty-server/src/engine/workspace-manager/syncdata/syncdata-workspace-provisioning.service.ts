@@ -26,6 +26,7 @@ import { CoreWorkflowMutationWorkspaceService } from 'src/engine/core-modules/wo
 import { CoreWorkflowVersionListService } from 'src/engine/core-modules/workflow/services/core-workflow-version-list.service';
 import { CoreWorkflowVersionMutationWorkspaceService } from 'src/engine/core-modules/workflow/services/core-workflow-version-mutation.workspace-service';
 import { CoreWorkflowVersionWriteService } from 'src/engine/core-modules/workflow/services/core-workflow-version-write.service';
+import { SyncdataQuoteModelProvisioningService } from 'src/engine/workspace-manager/syncdata/syncdata-quote-model-provisioning.service';
 import { ViewSortService } from 'src/engine/metadata-modules/view-sort/services/view-sort.service';
 import { ViewService } from 'src/engine/metadata-modules/view/services/view.service';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
@@ -54,12 +55,15 @@ export class SyncdataWorkspaceProvisioningService {
     private readonly viewSortService: ViewSortService,
     private readonly workspaceOrmManager: WorkspaceOrmManager,
     private readonly moduleRef: ModuleRef,
+    private readonly quoteModelProvisioningService: SyncdataQuoteModelProvisioningService,
   ) {}
 
   async provision(workspaceId: string): Promise<void> {
     await this.ensureTaskKanbanPrioritySort(workspaceId);
     await this.ensureOverdueWorkflow(workspaceId);
     await this.ensureRelancesWorkflows(workspaceId);
+    // quoting model: article, quote, quoteLine, opportunity.activeQuote
+    await this.quoteModelProvisioningService.provision(workspaceId);
   }
 
   // The task kanban stays grouped by status and its cards are sorted by priority inside each column,

@@ -171,6 +171,8 @@ export const buildOpportunityStandardFlatFieldMetadatas = ({
       ),
       icon: 'IconCurrencyDollar',
       isNullable: true,
+      // SyncData: the amount is computed from the active quote lines (SyncdataQuoteAmountListener)
+      isUIEditable: false,
     },
     standardObjectMetadataRelatedEntityIds,
     dependencyFlatEntityMaps,

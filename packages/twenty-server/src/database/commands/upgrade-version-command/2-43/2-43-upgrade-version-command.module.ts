@@ -11,6 +11,8 @@ import { MoveCampaignSendingTablesToWorkspaceCommand } from 'src/database/comman
 import { EnableCommonRecordSharingCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790251806563-enable-common-record-sharing.command';
 import { BackfillLogicFunctionFileRowsCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790262034322-backfill-logic-function-file-rows.command';
 import { SyncdataSyncTaskModelCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790300000000-syncdata-sync-task-model.command';
+import { SyncdataAddQuoteModelCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790400000000-syncdata-add-quote-model.command';
+import { SyncdataOpportunityAmountCommand } from 'src/database/commands/upgrade-version-command/2-43/2-43-workspace-command-1790500000000-syncdata-opportunity-amount.command';
 import { SyncdataProvisioningModule } from 'src/engine/workspace-manager/syncdata/syncdata-provisioning.module';
 import { ApplicationModule } from 'src/engine/core-modules/application/application.module';
 import { BillingModule } from 'src/engine/core-modules/billing/billing.module';
@@ -44,6 +46,8 @@ import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace
     SyncAttachmentRecordPageCommand,
     RelabelAttachmentTargetFieldsCommand,
     SyncdataSyncTaskModelCommand,
+    SyncdataAddQuoteModelCommand,
+    SyncdataOpportunityAmountCommand,
     provideWorkspaceScopedRepository(FieldMetadataEntity),
     provideWorkspaceScopedRepository(FileEntity),
   ],
